@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Women's Day 💜</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --rose:  #e8667a;
+      --lilac: #c78fd8;
+      --peach: #f4a96b;
+      --cream: #fff5f0;
+      --gold:  #e8b86d;
+      --deep:  #3d1a40;
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      overflow-x: hidden;
+      font-family: 'Cormorant Garamond', serif;
+      background: var(--deep);
+      color: var(--cream);
+      cursor: none;
+    }
+
+    /* ── Custom cursor ── */
+    .cursor {
+      position: fixed; top: 0; left: 0;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: radial-gradient(circle, #f4a9cb, #c78fd8);
+      pointer-events: none; transform: translate(-50%,-50%);
+      transition: transform .12s ease; z-index: 99998;
+      mix-blend-mode: difference;
+    }
+
+    /* ── Animated gradient background ── */
+    .bg {
+      position: fixed; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse at 20% 30%, #5e1860 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 70%, #1a0b3b 0%, transparent 55%),
+        radial-gradient(ellipse at 50% 50%, #3d1a40 0%, #0d071a 100%);
+      animation: bgShift 12s ease-in-out infinite alternate;
+    }
+    @keyframes bgShift {
+      0%   { filter: hue-rotate(0deg) brightness(1); }
+      100% { filter: hue-rotate(20deg) brightness(1.15); }
+    }
+
+    /* ── Floating petals canvas ── */
+    .petal-canvas { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+
+    /* ── Stars ── */
+    .stars { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+    .star {
+      position: absolute; border-radius: 50%; background: white;
+      animation: twinkle var(--d) ease-in-out infinite; opacity: 0;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0; transform: scale(.5); }
+      50%       { opacity: var(--op); transform: scale(1); }
+    }
+
+    /* ── Page layout ── */
+    .page {
+      position: relative; z-index: 10; min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 60px 20px; text-align: center;
+    }
+
+    .ribbon {
+      font-size: .75rem; letter-spacing: .35em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.5rem;
+      animation: fadeDown .8s ease both;
+    }
+
+    .date-badge {
+      display: inline-block;
+      border: 1px solid rgba(232,182,109,.4); border-radius: 40px;
+      padding: .35rem 1.4rem; font-size: .8rem; letter-spacing: .2em;
+      color: var(--gold); margin-bottom: 2.5rem;
+      backdrop-filter: blur(6px); background: rgba(255,255,255,.04);
+      animation: fadeDown .9s ease both;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 8vw, 6.5rem); font-weight: 700;
+      line-height: 1.08; margin-bottom: 1rem;
+      animation: fadeUp .9s ease both .1s;
+    }
+    h1 em {
+      font-style: italic;
+      background: linear-gradient(120deg, var(--rose), var(--lilac), var(--peach));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    .subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.4rem); font-style: italic;
+      color: rgba(255,245,240,.7); max-width: 520px; line-height: 1.7;
+      margin-bottom: 3rem; animation: fadeUp .9s ease both .2s;
+    }
+
+    /* ── Flowers ── */
+    .flowers {
+      font-size: 2.2rem; letter-spacing: .5rem; margin-bottom: 2.5rem;
+      animation: fadeUp .9s ease both .25s;
+    }
+    .flowers span { display: inline-block; animation: sway 3s ease-in-out infinite; }
+    .flowers span:nth-child(2) { animation-delay: .3s; }
+    .flowers span:nth-child(3) { animation-delay: .6s; }
+    .flowers span:nth-child(4) { animation-delay: .9s; }
+    .flowers span:nth-child(5) { animation-delay: 1.2s; }
+    @keyframes sway {
+      0%, 100% { transform: rotate(-8deg) scale(1); }
+      50%       { transform: rotate(8deg) scale(1.15); }
+    }
+
+    /* ── 4-Photo Grid ── */
+    .photo-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+      max-width: 500px; width: 100%; margin-bottom: 3rem;
+      animation: fadeUp .9s ease both .35s;
+    }
+    .photo-grid img {
+      width: 100%; aspect-ratio: 1 / 1; object-fit: cover;
+      border-radius: 20px; display: block; cursor: pointer;
+      transition: transform .35s ease, box-shadow .35s ease;
+    }
+    .photo-grid img:nth-child(1) { border: 2px solid rgba(199,143,216,.55); box-shadow: 0 8px 30px rgba(199,143,216,.3); }
+    .photo-grid img:nth-child(2) { border: 2px solid rgba(232,102,122,.55); box-shadow: 0 8px 30px rgba(232,102,122,.3); }
+    .photo-grid img:nth-child(3) { border: 2px solid rgba(244,169,107,.55); box-shadow: 0 8px 30px rgba(244,169,107,.3); }
+    .photo-grid img:nth-child(4) { border: 2px solid rgba(232,182,109,.55); box-shadow: 0 8px 30px rgba(232,182,109,.3); }
+    .photo-grid img:hover { transform: scale(1.06); }
+    .photo-grid img:nth-child(1):hover { box-shadow: 0 16px 50px rgba(199,143,216,.65); }
+    .photo-grid img:nth-child(2):hover { box-shadow: 0 16px 50px rgba(232,102,122,.65); }
+    .photo-grid img:nth-child(3):hover { box-shadow: 0 16px 50px rgba(244,169,107,.65); }
+    .photo-grid img:nth-child(4):hover { box-shadow: 0 16px 50px rgba(232,182,109,.65); }
+
+    /* ── Lightbox ── */
+    .lightbox {
+      display: none; position: fixed; inset: 0; z-index: 9990;
+      background: rgba(10,3,20,.92); backdrop-filter: blur(16px);
+      align-items: center; justify-content: center;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 88vw; max-height: 88vh; border-radius: 18px;
+      box-shadow: 0 30px 100px rgba(0,0,0,.6); animation: popIn .3s ease;
+    }
+    .lightbox-close {
+      position: absolute; top: 22px; right: 28px;
+      font-size: 2rem; color: rgba(255,255,255,.6); cursor: pointer;
+      transition: color .2s;
+    }
+    .lightbox-close:hover { color: white; }
+    @keyframes popIn { from { opacity:0; transform:scale(.88); } to { opacity:1; transform:scale(1); } }
+
+    /* ── Message card ── */
+    .card {
+      background: rgba(255,255,255,.05); backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,.12); border-radius: 28px;
+      padding: 2.5rem 3rem; max-width: 620px; width: 100%; margin-bottom: 3rem;
+      animation: fadeUp .9s ease both .45s;
+      box-shadow: 0 30px 80px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.06);
+    }
+    .card p { font-size: 1.15rem; line-height: 1.9; color: rgba(255,245,240,.88); }
+    .card .highlight { color: var(--lilac); font-style: italic; }
+
+    /* ── Music player ── */
+    .music-wrap { animation: fadeUp .9s ease both .55s; margin-bottom: 2.5rem; }
+    .music-label { font-size: .75rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: .8rem; }
+    .player-box {
+      display: flex; align-items: center; gap: 1rem;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 50px; padding: .6rem 1.5rem .6rem .6rem; backdrop-filter: blur(12px);
+    }
+    .play-btn {
+      width: 48px; height: 48px; border-radius: 50%; border: none; cursor: pointer;
+      background: linear-gradient(135deg, var(--rose), var(--lilac)); color: white;
+      font-size: 1.1rem; display: flex; align-items: center; justify-content: center;
+      transition: transform .2s, box-shadow .2s; flex-shrink: 0;
+      box-shadow: 0 4px 20px rgba(199,143,216,.4);
+    }
+    .play-btn:hover { transform: scale(1.1); box-shadow: 0 6px 30px rgba(199,143,216,.6); }
+    .track-info { text-align: left; }
+    .track-name { font-size: .9rem; font-weight: 600; color: var(--cream); }
+    .track-note { font-size: .72rem; color: rgba(255,255,255,.4); }
+    .wave { display: flex; gap: 3px; align-items: center; height: 20px; }
+    .wave-bar {
+      width: 3px; border-radius: 3px;
+      background: linear-gradient(to top, var(--rose), var(--lilac));
+      animation: waveAnim 1s ease-in-out infinite; opacity: 0;
+    }
+    .wave-bar:nth-child(1) { height: 8px;  animation-delay: 0s; }
+    .wave-bar:nth-child(2) { height: 14px; animation-delay: .15s; }
+    .wave-bar:nth-child(3) { height: 20px; animation-delay: .3s; }
+    .wave-bar:nth-child(4) { height: 14px; animation-delay: .45s; }
+    .wave-bar:nth-child(5) { height: 8px;  animation-delay: .6s; }
+    .wave-bar.active { opacity: 1; }
+    @keyframes waveAnim { 0%, 100% { transform: scaleY(.5); } 50% { transform: scaleY(1); } }
+
+    /* ── Footer ── */
+    .footer { font-size: .78rem; color: rgba(255,255,255,.3); letter-spacing: .1em; animation: fadeUp 1s ease both .65s; }
+    .footer span { color: var(--rose); }
+
+    /* ── All keyframes ── */
+    @keyframes fadeUp   { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:none; } }
+    @keyframes fadeDown { from { opacity:0; transform:translateY(-20px); } to { opacity:1; transform:none; } }
+    @keyframes fadeIn   { from { opacity:0; } to { opacity:1; } }
+    @keyframes pulse    { 0%, 100% { transform:scale(1); } 50% { transform:scale(1.2); } }
+    @keyframes glow     { from { box-shadow:0 8px 30px rgba(199,143,216,.4); } to { box-shadow:0 8px 50px rgba(232,102,122,.7); } }
+    @keyframes burst    { 0% { opacity:1; transform:translate(0,0) scale(1); } 100% { opacity:0; transform:translate(var(--dx),var(--dy)) scale(.4); } }
+
+    @media (max-width: 500px) {
+      .card { padding: 1.8rem 1.4rem; }
+      .photo-grid { gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+
+<!-- BG layers -->
+<div class="bg"></div>
+<div class="stars" id="stars"></div>
+<canvas class="petal-canvas" id="petalCanvas"></canvas>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close">✕</span>
+  <img id="lightboxImg" src="" alt=""/>
+</div>
+
+<!-- ═══════════════════ PAGE ═══════════════════ -->
+<div class="page">
+
+  <div class="ribbon">✦ Celebrating My Women ✦</div>
+  <div class="date-badge">Happy Women's Day Chikkuuuuuu</div>
+
+  <h1>To the Women<br/>who <em>Light My World</em></h1>
+
+  <p class="subtitle">
+    Fearless. Radiant. Unstoppable.<br/>
+    This day — and every day — is yours di alagiiiii.
+  </p>
+
+
+  <!-- ═══ 4 PHOTOS ═══
+       Steps:
+       1. Put your 4 image files in the SAME folder as this index.html
+       2. Replace photo1.jpg, photo2.jpg, photo3.jpg, photo4.jpg
+          with your actual filenames (e.g. girls.jpg, trip.png …)
+       Click any photo to see it full-screen! -->
+  <div class="photo-grid">
+    <img src="p1.JPG" alt="Memory 1" onclick="openLightbox(this)"/>
+    <img src="p2.JPG" alt="Memory 2" onclick="openLightbox(this)"/>
+    <img src="p3.JPG" alt="Memory 3" onclick="openLightbox(this)"/>
+    <img src="p4.JPG" alt="Memory 4" onclick="openLightbox(this)"/>
+  </div>
+
+  <!-- ═══ MESSAGE ═══ -->
+  <div class="card">
+    <p>
+        To my forever person, my <span class="highlight">Pondatti</span> —
+        you are the poem I never knew how to write,
+        the warmth I never knew I needed.<br/><br/>
+        In every quiet moment and every wild adventure,
+        you are my favourite thing about life.
+        Loving you is the most beautiful and the best thing I have ever done in my Life. 💜<br/><br/>
+      Happy Women's day to my women <span class="highlight">who takes care of me and give unconditional love like a Mother, who protects me like a Father,
+      who fight with me like a sister, who addresses my mistake and guides me as a friend and what not thango</span>. Literally you shaped me into a better person 
+      who i am now and you are taking care of me like a baby and i am literally blessed to have you in my life thango. 
+      And i want to let you know that this man is very much proud of YOU and US. You've been evolving day by day thango and i could able to see that,
+      like becoming mature and being calm in handling pressure and i love watching you grow di mayilu and also i love watching US growing together.
+      I promise you that i will take care of you like my last breath and won't let you down in any situation and mainly i won't behave or do the 
+      things which will hurt you di thangamee. I will not only love you in this universe but will come and find you in all other universe and will 
+      give all my love to you and only to you. And you know how much i love you la di alagi, but still i will say once again.
+      I love youuuu soooooo much that no one's love will come near me and even the gods get jealous of the amount of love i shower towards you.
+      Forever and till my soul lives i will love you My THANGA MAYILUU.
+        
+      Thank you for being <span class="highlight">exactly who you are</span> —
+      wild, tender, brilliant, and so deeply loved. 💜
+    </p>
+  </div>
+
+  <!-- ═══ MUSIC PLAYER ═══ -->
+  <div class="music-wrap">
+    <div class="music-label">🎵 Now playing</div>
+    <div class="player-box">
+      <button class="play-btn" id="playBtn" onclick="toggleMusic()">▶</button>
+      <div class="track-info">
+        <!-- Change this to your song title -->
+        <div class="track-name">Neeyum Naanum</div>
+        <div class="track-note">♥✨💫</div>
+      </div>
+      <div class="wave">
+        <div class="wave-bar"></div>
+        <div class="wave-bar"></div>
+        <div class="wave-bar"></div>
+        <div class="wave-bar"></div>
+        <div class="wave-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ AUDIO ═══
+       1. Put your MP3 in the same folder as index.html
+       2. Replace  your-song.mp3  with your filename -->
+  <audio id="bgMusic" loop>
+    <source src="Naanum Rowdy Dhaan - Neeyum Naanum  Official Video  Vijay Sethupathi, Nayanthara  Anirudh.mp3" type="audio/mpeg"/>
+  </audio>
+
+  <div class="footer">Made with <span>♥</span> for my most wonderful women in the world</div>
+
+</div><!-- /page -->
+
+<!-- ═══════════════════ AUTOPLAY OVERLAY ═══════════════════
+     One tap → site opens + music starts automatically       -->
+<div id="startOverlay" style="
+  position:fixed; inset:0; z-index:99999;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  background:rgba(20,5,28,0.9); backdrop-filter:blur(14px);
+  cursor:pointer; animation:fadeIn .6s ease;
+" onclick="startSite()">
+  <div style="font-size:3.8rem; margin-bottom:1.2rem; animation:pulse 1.4s ease-in-out infinite;">💜</div>
+  <div style="font-family:'Playfair Display',serif; font-size:clamp(1.6rem,5vw,2.6rem); color:#fff5f0; margin-bottom:.5rem; text-align:center; padding:0 20px;">
+    Happy Women's Day di Cutieee piee
+  </div>
+  <div style="font-size:.82rem; letter-spacing:.22em; text-transform:uppercase; color:rgba(255,255,255,.4); margin-bottom:2.2rem;">
+    A small gift from you Chikkiii🌸
+  </div>
+  <div style="background:linear-gradient(135deg,#e8667a,#c78fd8); border-radius:50px; padding:.9rem 2.6rem; font-family:'Cormorant Garamond',serif; font-size:1.1rem; color:white; letter-spacing:.08em; box-shadow:0 8px 30px rgba(199,143,216,.5); animation:glow 2s ease-in-out infinite alternate;">
+    ✨ Click to see my Present! ✨
+  </div>
+</div>
+
+<!-- ═══════════════════ SCRIPTS ═══════════════════ -->
+<script>
+  /* Cursor */
+  const cursorEl = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursorEl.style.left = e.clientX + 'px';
+    cursorEl.style.top  = e.clientY + 'px';
+  });
+
+  /* Stars */
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 120; i++) {
+    const s = document.createElement('div');
+    s.classList.add('star');
+    const sz = Math.random() * 3 + 1;
+    s.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${(Math.random()*4+2).toFixed(1)}s;--op:${(Math.random()*.5+.2).toFixed(2)};animation-delay:${(Math.random()*6).toFixed(1)}s;`;
+    starsEl.appendChild(s);
+  }
+
+  /* Floating petals */
+  const canvas = document.getElementById('petalCanvas');
+  const ctx    = canvas.getContext('2d');
+  let W, H;
+  const EMOJIS = ['🌸','💜','✨','🌷','💐','⭐','💫'];
+  function resize() { W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
+  resize(); window.addEventListener('resize', resize);
+
+  class Petal {
+    constructor() { this.reset(true); }
+    reset(init=false) {
+      this.x=Math.random()*W; this.y=init?Math.random()*H:-40;
+      this.size=Math.random()*18+10; this.spd=Math.random()*.6+.3;
+      this.drift=(Math.random()-.5)*.6; this.rot=Math.random()*360;
+      this.rotS=(Math.random()-.5)*1.2;
+      this.emoji=EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
+      this.alpha=Math.random()*.5+.35;
+    }
+    update() { this.y+=this.spd; this.x+=this.drift; this.rot+=this.rotS; if(this.y>H+50)this.reset(); }
+    draw() {
+      ctx.save(); ctx.globalAlpha=this.alpha;
+      ctx.translate(this.x,this.y); ctx.rotate(this.rot*Math.PI/180);
+      ctx.font=`${this.size}px serif`; ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText(this.emoji,0,0); ctx.restore();
+    }
+  }
+  const petals = Array.from({length:38},()=>new Petal());
+  (function loop(){ ctx.clearRect(0,0,W,H); petals.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(loop); })();
+
+  /* Audio */
+  const audio    = document.getElementById('bgMusic');
+  const playBtn  = document.getElementById('playBtn');
+  const waveBars = document.querySelectorAll('.wave-bar');
+  let playing    = false;
+
+  function setPlaying(state) {
+    playing = state;
+    playBtn.textContent = state ? '⏸' : '▶';
+    waveBars.forEach(b => b.classList.toggle('active', state));
+  }
+
+  /* Called by the overlay — fades it out AND starts music */
+  function startSite() {
+    const ov = document.getElementById('startOverlay');
+    ov.style.transition = 'opacity .7s ease';
+    ov.style.opacity    = '0';
+    setTimeout(() => ov.remove(), 700);
+    audio.play()
+      .then(() => setPlaying(true))
+      .catch(() => console.warn('💡 Rename "your-song.mp3" to your actual MP3 filename in the <audio> tag.'));
+  }
+
+  /* Play/pause button on the player bar */
+  function toggleMusic() {
+    if (!playing) { audio.play().then(() => setPlaying(true)); }
+    else          { audio.pause(); setPlaying(false); }
+  }
+
+  /* Lightbox */
+  function openLightbox(img) {
+    document.getElementById('lightboxImg').src = img.src;
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+  document.addEventListener('keydown', e => { if(e.key==='Escape') closeLightbox(); });
+
+  /* Click sparkle burst */
+  document.addEventListener('click', e => {
+    if (e.target.closest('#startOverlay') || e.target.closest('.lightbox')) return;
+    for (let i=0; i<6; i++) {
+      const h = document.createElement('div');
+      h.textContent = ['💜','🌸','✨','💗'][Math.floor(Math.random()*4)];
+      h.style.cssText = `position:fixed;left:${e.clientX}px;top:${e.clientY}px;font-size:${Math.random()*14+12}px;pointer-events:none;z-index:9997;animation:burst .9s ease forwards;--dx:${(Math.random()-.5)*120}px;--dy:${-(Math.random()*80+40)}px;`;
+      document.body.appendChild(h);
+      setTimeout(()=>h.remove(), 900);
+    }
+  });
+</script>
+
+</body>
+</html>
